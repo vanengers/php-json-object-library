@@ -101,7 +101,7 @@ class SamplePhpObject extends PhpJsonObject
            'property'
     ];
 
-    public string $proper;;[ty = 'value';
+    public string $property = 'value';
     public string $property2 = 'value';
     
     ...
