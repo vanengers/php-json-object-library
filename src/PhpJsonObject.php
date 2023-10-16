@@ -72,6 +72,8 @@ abstract class PhpJsonObject
                     call_user_func_array([$this, 'set' . ucfirst(strtolower($key))], ['data' => $value]);
                 } else if (property_exists($this, strtolower($key))) {
                     $this->{strtolower($key)} = $value;
+                } else if (property_exists($this, $key)) {
+                    $this->{$key} = $value;
                 }
             }
         }
