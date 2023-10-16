@@ -10,7 +10,7 @@ abstract class PhpJsonObject
     public $mappers = [];
 
     /** @var array $exclude_from_array */
-    private $exclude_from_array = [];
+    public $exclude_from_array = [];
 
     /** @var array $hard_exclude_from_array */
     private $hard_exclude_from_array = [
