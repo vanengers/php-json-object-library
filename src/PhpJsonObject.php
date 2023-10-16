@@ -40,7 +40,7 @@ abstract class PhpJsonObject
      * @return void
      * @throws Exception
      * @since 16-10-2023
-     * @author George van Engers <george@dewebsmid.nl>
+     * @author George van Engers <vanengers@gmail.com>
      */
     public function fromJson($json)
     {
@@ -54,7 +54,7 @@ abstract class PhpJsonObject
     /**
      * @param $data
      * @return void
-     * @author George van Engers <george@dewebsmid.nl>
+     * @author George van Engers <vanengers@gmail.com>
      * @since 16-10-2023
      */
     public function fromArray($data)
@@ -86,7 +86,7 @@ abstract class PhpJsonObject
      *       'skip_empty' => [] // array_keys
      *  ]
      * @return false|string
-     * @author George van Engers <george@dewebsmid.nl>
+     * @author George van Engers <vanengers@gmail.com>
      * @since 16-10-2023
      */
     public function toJson(array $configuration = [])
@@ -95,16 +95,11 @@ abstract class PhpJsonObject
     }
 
     /**
-     * @return array
-     * @author George van Engers <george@dewebsmid.nl>
-     * @since 16-10-2023
-     */
-    /**
      * @param $configuration
      * @param $key
      * @param $value
      * @return bool
-     * @author George van Engers <george@dewebsmid.nl>
+     * @author George van Engers <vanengers@gmail.com>
      * @since 15-09-2023
      */
     private function skippable($configuration, $key, $value): bool
@@ -145,7 +140,7 @@ abstract class PhpJsonObject
      *      'skip_empty' => [] // array_keys
      * ]
      * @return array
-     * @author george@dewebsmid.nl
+     * @author vanengers@gmail.com
      * @since 06-07-2022
      */
     public function toArray(array $configuration = []): array
@@ -178,7 +173,7 @@ abstract class PhpJsonObject
     /**
      * @param $value
      * @return mixed
-     * @author George van Engers <george@dewebsmid.nl>
+     * @author George van Engers <vanengers@gmail.com>
      * @since 16-10-2023
      */
     private function filterValue($value)
