@@ -2,6 +2,7 @@
 
 namespace Vanengers\PhpJsonObjectLibrary;
 
+use Exception;
 use Throwable;
 
 abstract class PhpJsonObject
@@ -21,6 +22,7 @@ abstract class PhpJsonObject
 
     /**
      * @param $jsonOrArray
+     * @throws Exception
      */
     public function __construct($jsonOrArray = null)
     {
@@ -36,12 +38,16 @@ abstract class PhpJsonObject
     /**
      * @param $json
      * @return void
-     * @author George van Engers <george@dewebsmid.nl>
+     * @throws Exception
      * @since 16-10-2023
+     * @author George van Engers <george@dewebsmid.nl>
      */
     public function fromJson($json)
     {
         $array = json_decode($json, true);
+        if ($array == NULL ) {
+            throw new Exception('Invalid JSON');
+        }
         $this->fromArray($array);
     }
 
@@ -55,6 +61,7 @@ abstract class PhpJsonObject
     {
         if (is_array($data)) {
             foreach ($data as $key => $value) {
+                $value = $this->filterValue($value);
                 if (array_key_exists(strtolower($key), $this->mappers)) {
                     $key = $this->mappers[strtolower($key)];
                 } else if (array_key_exists($key, $this->mappers)) {
@@ -166,5 +173,37 @@ abstract class PhpJsonObject
             }
         }
         return $array;
+    }
+
+    /**
+     * @param $value
+     * @return mixed
+     * @author George van Engers <george@dewebsmid.nl>
+     * @since 16-10-2023
+     */
+    private function filterValue($value)
+    {
+        // sometimes we get a string with a number, but we want an integer
+        // or we get a string with a boolean, but we want a boolean
+        // or we get a string with null but we want a null
+
+        if (is_numeric($value)) {
+            if (strpos($value, '.') !== false) {
+                return floatval($value);
+            }
+            return intval($value);
+        }
+
+        if ($value == 'true') {
+            return true;
+        }
+        else if ($value == 'false') {
+            return false;
+        }
+        else if ($value == 'null') {
+            return null;
+        }
+
+        return $value;
     }
 }
