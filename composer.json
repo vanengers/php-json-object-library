@@ -1,0 +1,22 @@
+{
+    "name": "vanengers/php-json-object-library",
+    "description": "Base class for api",
+    "type": "library",
+    "license": "mit",
+    "autoload": {
+        "psr-4": {
+            "Vanengers\\PhpJsonObjectLibrary\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "George van Engers",
+            "email": "vanengers@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0.0",
+        "ext-json": "*"
+    }
+}
