@@ -70,9 +70,13 @@ abstract class PhpJsonObject
 
                 if (method_exists($this, 'set' . ucfirst(strtolower($key)))) {
                     call_user_func_array([$this, 'set' . ucfirst(strtolower($key))], ['data' => $value]);
-                } else if (property_exists($this, strtolower($key))) {
+                } else if (method_exists($this, 'set' . $this->snakeToCamel($key))) {
+                    call_user_func_array([$this, 'set' . $this->snakeToCamel($key)], ['data' => $value]);
+                }
+                else if (property_exists($this, strtolower($key))) {
                     $this->{strtolower($key)} = $value;
-                } else if (property_exists($this, $key)) {
+                }
+                else if (property_exists($this, $key)) {
                     $this->{$key} = $value;
                 }
             }
@@ -94,6 +98,17 @@ abstract class PhpJsonObject
     public function toJson(array $configuration = [])
     {
         return json_encode($this->toArray());
+    }
+
+    /**
+     * @param $input
+     * @return string
+     * @author George van Engers <vanengers@gmail.com>
+     * @since 18-10-2023
+     */
+    private function snakeToCamel($input)
+    {
+        return ucfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $input))));
     }
 
     /**

@@ -9,7 +9,7 @@ use Vanengers\PhpJsonObjectLibrary\Tests\Mocks\TestSetterObject;
 
 class ExcludeTest extends TestCase
 {
-    public function testToArrayDoesGiveResultWithPrefix()
+    public function testToArrayExcludesDescription()
     {
         $title = "Hello World!";
         $test = new TestExcludeObject(['title'=>$title]);

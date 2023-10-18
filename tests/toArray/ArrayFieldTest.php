@@ -3,6 +3,7 @@
 namespace Vanengers\PhpJsonObjectLibrary\Tests\toArray;
 
 use PHPUnit\Framework\TestCase;
+use Vanengers\PhpJsonObjectLibrary\Tests\Mocks\TestCamelObject;
 use Vanengers\PhpJsonObjectLibrary\Tests\Mocks\TestObject;
 
 class ArrayFieldTest extends TestCase
@@ -54,5 +55,14 @@ class ArrayFieldTest extends TestCase
         $result = $test->toArray();
 
         $this->assertCount(2, $result);
+    }
+
+    public function testCamelPropGivesResult()
+    {
+        $title = "Hello World!";
+        $test = new TestCamelObject("{\"camel_test\":\"".$title."\"}");
+        $result = $test->toArray();
+
+        $this->assertEquals($title, $result["camel_test"]);
     }
 }
