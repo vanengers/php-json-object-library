@@ -113,3 +113,58 @@ Which results in
     "property2": "value"
 }
 ```
+
+### Add prefixes to your keys, when your resultset defines multidimensional arrays with some keys being the same
+#### You can then process the parent key-name and add the whole key in the mappers
+```
+class SamplePhpObject extends PhpJsonObject 
+{
+    public $mappers = [
+           'person_name' => 'author',
+           'recipient_name' => 'recipient',
+    ];
+
+    public string $author = '';
+    public string $recipient = '';
+    
+    ...
+}
+```
+#### While your resultset is like this
+```
+{
+    "person": {
+        "name": "John Doe"
+    },
+    "recipient": {
+        "name": "Jane Doe"
+    }
+}
+```
+#### You should use the prefix option while parsing the json and use setters
+```
+class SamplePhpObject extends PhpJsonObject 
+{
+    public $mappers = [
+           'person_name' => 'author',
+           'recipient_name' => 'recipient',
+    ];
+
+    public string $author = '';
+    public string $recipient = '';
+    
+    public function setPerson($data) 
+    {
+        if (is_array($data)) {
+            $this->fromArray($data);
+        }
+    }
+    
+    public function setRecipient($data) 
+    {
+        if (is_array($data)) {
+            $this->fromArray($data);
+        }
+    }
+}
+```

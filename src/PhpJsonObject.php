@@ -22,45 +22,51 @@ abstract class PhpJsonObject
 
     /**
      * @param $jsonOrArray
+     * @param null $prefix
      * @throws Exception
      */
-    public function __construct($jsonOrArray = null)
+    public function __construct($jsonOrArray = null, $prefix = null)
     {
         if (!is_null($jsonOrArray)) {
             if (is_array($jsonOrArray)) {
-                $this->fromArray($jsonOrArray);
+                $this->fromArray($jsonOrArray, $prefix);
             } else {
-                $this->fromJson($jsonOrArray);
+                $this->fromJson($jsonOrArray, $prefix);
             }
         }
     }
 
     /**
      * @param $json
+     * @param null $prefix
      * @return void
      * @throws Exception
      * @since 16-10-2023
      * @author George van Engers <vanengers@gmail.com>
      */
-    public function fromJson($json)
+    public function fromJson($json, $prefix = null)
     {
         $array = json_decode($json, true);
         if ($array == NULL ) {
             throw new Exception('Invalid JSON');
         }
-        $this->fromArray($array);
+        $this->fromArray($array, $prefix);
     }
 
     /**
      * @param $data
+     * @param null $prefix
      * @return void
      * @author George van Engers <vanengers@gmail.com>
      * @since 16-10-2023
      */
-    public function fromArray($data)
+    public function fromArray($data, $prefix = null)
     {
         if (is_array($data)) {
             foreach ($data as $key => $value) {
+                if (!is_null($prefix)) {
+                    $key = $prefix . $key;
+                }
                 $value = $this->filterValue($value);
                 if (array_key_exists(strtolower($key), $this->mappers)) {
                     $key = $this->mappers[strtolower($key)];
