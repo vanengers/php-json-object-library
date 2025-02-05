@@ -17,8 +17,12 @@ abstract class PhpJsonObject
     private $hard_exclude_from_array = [
         'mappers',
         'exclude_from_array',
-        'hard_exclude_from_array'
+        'hard_exclude_from_array',
+        'skip_filter_value'
     ];
+
+    /** @var array $skip_filter_value */
+    public $skip_filter_value = [];
 
     /**
      * @param $jsonOrArray
@@ -67,7 +71,11 @@ abstract class PhpJsonObject
                 if (!is_null($prefix)) {
                     $key = $prefix . $key;
                 }
-                $value = $this->filterValue($value);
+
+                if (!in_array($key, $this->skip_filter_value)) {
+                    $value = $this->filterValue($value);
+                }
+
                 if (array_key_exists(strtolower($key), $this->mappers)) {
                     $key = $this->mappers[strtolower($key)];
                 } else if (array_key_exists($key, $this->mappers)) {
